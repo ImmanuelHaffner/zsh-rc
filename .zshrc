@@ -1,50 +1,72 @@
 export DEFAULT_USER=immanuel
 
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 
 # Shortcut to University directory
 alias uni='cd /home/immanuel/Documents/University/'
 
 # Shortcut to Sierra's Clang directory
 alias gosierra='cd /home/immanuel/Documents/Sierra/'
-alias gosclang='cd /home/immanuel/Documents/Sierra/llvm/tools/clang/'
+alias goclang='cd /home/immanuel/Documents/Sierra/llvm/tools/clang/'
 
-alias sierra='/home/immanuel/Documents/Sierra/build_debug/bin/clang -fsierra'
-alias sierra++='/home/immanuel/Documents/Sierra/build_debug/bin/clang++ -fsierra'
+#alias sierra='/home/immanuel/Documents/Sierra/build_debug/bin/clang -fsierra'
+#alias sierra++='/home/immanuel/Documents/Sierra/build_debug/bin/clang++ -fsierra'
 
 
-#===============================================================================
+#==============================================================================
 #
 # Git
 #
-#===============================================================================
+#==============================================================================
 
 alias glg='git lg'
 alias gst='git st'
 
 
-#===============================================================================
+#==============================================================================
 #
 # Sxiv
 #
-#===============================================================================
+#==============================================================================
 
 alias sxiv='sxiv-rifle'
 
-#===============================================================================
+
+#==============================================================================
 #
-# Merge PDFs
+# Zathura
 #
-#===============================================================================
-#gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=finished.pdf file1.pdf file2.pdf
+#==============================================================================
 
-# TODO implement a function for merging PDFs
+alias zathura='zathura --fork > /dev/null 2>&1'
 
 
-#===============================================================================
+#==============================================================================
+#
+# Merges multiple PDFs into one by concatenating the pages
+#
+# Usage: pdfmerge <OUTPUT-FILE> <FILE1> <FILE2> ...
+#
+#==============================================================================
+
+pdfmerge()
+{
+  TARGET=$1
+  shift
+  # to fix the size of the resulting pages use
+  # -dDEVICEWIDTHPOINTS=<W> in pixels
+  # -dDEVICEHEIGHTPOINTS=<H> in pixels
+  # -dPDFFitPage
+  gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$TARGET" "$@"
+}
+
+
+#==============================================================================
 #
 # SVN
 #
-#===============================================================================
+#==============================================================================
 
 # Colorize SVN
 # ------------

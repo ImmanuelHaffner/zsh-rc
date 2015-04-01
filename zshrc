@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=/usr/share/oh-my-zsh/
+ZSH_CACHE_DIR="/tmp/zsh_cache"
 
 
 #===============================================================================

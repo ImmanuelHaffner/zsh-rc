@@ -22,6 +22,7 @@ alias goclang='cd /home/immanuel/Documents/Sierra/llvm/tools/clang/'
 
 alias glg='git lg'
 alias gst='git st'
+alias gg='git get'
 
 
 #==============================================================================
@@ -39,7 +40,8 @@ alias sxiv='sxiv-rifle'
 #
 #==============================================================================
 
-alias zathura='zathura --fork > /dev/null 2>&1'
+alias zathura='/usr/bin/zathura --fork > /dev/null 2>&1'
+alias z='zathura'
 
 
 #==============================================================================

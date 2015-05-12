@@ -78,19 +78,19 @@ pdfmerge()
 
 function svn {
 # Skip the color script when running an svn commit.
-if [ "$1" == "ci" ] || [ "$1" == "commit" ] || [ "$1" == "add" ]
+if [[ "$1" == "ci" ]] || [[ "$1" == "commit" ]] || [[ "$1" == "add" ]];
 then
   command svn "$@";
   return;
 fi
 
 # For 'svn log' and 'svn diff' pipe output through colordiff
-if [ "x$1" = "xlog" ]
+if [[ "x$1" == "xlog" ]];
 then
   command svn "$@" -r 0:HEAD | colordiff;
   return;
 fi
-if [ "x$1" = "xdiff" ]
+if [[ "x$1" == "xdiff" ]];
 then
   command svn "$@" | colordiff;
   return;

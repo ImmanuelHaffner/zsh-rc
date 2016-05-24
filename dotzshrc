@@ -1,3 +1,4 @@
+# vim: set filetype=zsh:
 export DEFAULT_USER=immanuel
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

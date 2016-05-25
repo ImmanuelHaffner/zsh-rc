@@ -3,36 +3,8 @@ export DEFAULT_USER=immanuel
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-
-# Shortcut to University directory
+export ANDROID_HOME=/opt/android-sdk
 alias uni='cd /home/immanuel/Documents/University/'
-
-# Shortcut to Sierra's Clang directory
-alias gosierra='cd /home/immanuel/Documents/Sierra/'
-alias goclang='cd /home/immanuel/Documents/Sierra/llvm/tools/clang/'
-
-#alias sierra='/home/immanuel/Documents/Sierra/build_debug/bin/clang -fsierra'
-#alias sierra++='/home/immanuel/Documents/Sierra/build_debug/bin/clang++ -fsierra'
-
-
-#==============================================================================
-#
-# NeoVim & VIm
-#
-#==============================================================================
-
-alias n='nvim'
-alias visu='sudo -E vim'
-
-#==============================================================================
-#
-# pfind
-#
-#==============================================================================
-
-pfind() {
-    ps wwup `pgrep "$1"`
-}
 
 #==============================================================================
 #
@@ -48,62 +20,27 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'other page faults:         %R'
 
 
-#==============================================================================
-#
-# Git
-#
-#==============================================================================
+# NeoVim & VIm
+alias n='nvim'
+alias nsu='sudo -E nvim'
+alias visu='sudo -E vim'
 
+# Git
 alias glg='git lg'
 alias gst='git st'
 alias gg='git get'
 alias gdx='git dx'
 
-
-#==============================================================================
-#
-# Sxiv
-#
-#==============================================================================
-
-alias sxiv='sxiv-rifle'
-
-
-#==============================================================================
-#
 # Zathura
-#
-#==============================================================================
-
 alias zathura='/usr/bin/zathura --fork > /dev/null 2>&1'
 alias z='zathura'
 
-
-#==============================================================================
-#
-# Python
-#
-#==============================================================================
-
+# Others
+alias sxiv='sxiv-rifle'
 alias py=python3
-
-
-#==============================================================================
-#
-# Weather forecast
-#
-#==============================================================================
-
 alias weather='curl -4 www.wttr.in'
 
-
-#==============================================================================
-#
-# Process Filter
-#
-#==============================================================================
-
-pfind() {
+function pfind() {
     ps wwup `pgrep "$1"`
 }
 
@@ -123,20 +60,11 @@ alias lsblk='lsblk -o SIZE,NAME,VENDOR,MODEL,LABEL,FSTYPE,RO,TYPE,MOUNTPOINT,UUI
 #
 #==============================================================================
 
-ytdl() {
+function ytdl() {
     youtube-dl -v --yes-playlist -o '%(title)s.%(ext)s' -x --audio-quality 0 --add-metadata --metadata-from-title '%(artist)s - %(title)s' "$@"
 }
 
-
-#==============================================================================
-#
-# Merges multiple PDFs into one by concatenating the pages
-#
-# Usage: pdfmerge <OUTPUT-FILE> <FILE1> <FILE2> ...
-#
-#==============================================================================
-
-pdfmerge()
+function pdfmerge()
 {
   TARGET=$1
   shift
@@ -147,21 +75,11 @@ pdfmerge()
   gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$TARGET" "$@"
 }
 
+function notify()
+{
+    $*; notify-send "Task done." "Executed '$*'.\nreturn code: $?"
+}
 
-#==============================================================================
-#
-# Android SDK
-#
-#==============================================================================
-
-export ANDROID_HOME=/opt/android-sdk
-
-
-#==============================================================================
-#
-# SVN
-#
-#==============================================================================
 
 # Colorize SVN
 # ------------

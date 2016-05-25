@@ -104,13 +104,6 @@ alias free='free -m'                      # show sizes in MB
 alias vp='vim PKGBUILD'
 alias vs='vim SPLITBUILD'
 
-# vim stuff
-export EDITOR=vim
-export DIFF=vimdiff
-export VISUAL=vim
-alias vi=vim
-alias view='vim -R'
-
 #========================
 # Create new directory and cd into it
 #========================

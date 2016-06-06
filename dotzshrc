@@ -1,16 +1,18 @@
 # vim: set filetype=zsh:
-export DEFAULT_USER=immanuel
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# oh-my-zsh
+export DEFAULT_USER=immanuel
+ZSH=/usr/share/oh-my-zsh
+ZSH_CACHE_DIR="/tmp/zsh_cache"
+ZSH_THEME="agnoster"
+DISABLE_AUTO_UPDATE="true"
+plugins=(git git-extras gitfast themes archlinux battery cp history compleat)
+source $ZSH/oh-my-zsh.sh
 
 export ANDROID_HOME=/opt/android-sdk
 alias uni='cd /home/immanuel/Documents/University/'
 
-#==============================================================================
-#
-# time
-#
-#==============================================================================
+# extended output for `time' command
 TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'avg shared (code):         %X KB'$'\n'\
 'avg unshared (data/stack): %D KB'$'\n'\
@@ -45,66 +47,50 @@ function pfind() {
 }
 
 
-#==============================================================================
-#
-# Pretty lsblk
-#
-#==============================================================================
-
+# extended `lsblk'
 alias lsblk='lsblk -o SIZE,NAME,VENDOR,MODEL,LABEL,FSTYPE,RO,TYPE,MOUNTPOINT,UUID'
 
 
-#==============================================================================
-#
-# Youtube-DL
-#
-#==============================================================================
-
+# useful `youtube-dl' flags
 function ytdl() {
     youtube-dl -v --yes-playlist -o '%(title)s.%(ext)s' -x --audio-quality 0 --add-metadata --metadata-from-title '%(artist)s - %(title)s' "$@"
 }
 
-function pdfmerge()
-{
-  TARGET=$1
-  shift
-  # to fix the size of the resulting pages use
-  # -dDEVICEWIDTHPOINTS=<W> in pixels
-  # -dDEVICEHEIGHTPOINTS=<H> in pixels
-  # -dPDFFitPage
-  gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$TARGET" "$@"
+function pdfmerge() {
+    TARGET=$1
+    shift
+    # to fix the size of the resulting pages use
+    # -dDEVICEWIDTHPOINTS=<W> in pixels
+    # -dDEVICEHEIGHTPOINTS=<H> in pixels
+    # -dPDFFitPage
+    gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$TARGET" "$@"
 }
 
-function notify()
-{
+# send notification when program terminates
+function notify() {
     $*; notify-send "Task done." "Executed '$*'.\nreturn code: $?"
 }
 
 
-# Colorize SVN
-# ------------
-# Adds color to the output of commands like svn status and svn update.
-# The original version of the script was posted by Ash_ on Stackoverflow
-# Source: http://stackoverflow.com/questions/8786400/svn-add-colors-on-command-line-svn-with-awk-in-bash
-
+# colorize SVN
 function svn {
 # Skip the color script when running an svn commit.
 if [[ "$1" == "ci" ]] || [[ "$1" == "commit" ]] || [[ "$1" == "add" ]];
 then
-  command svn "$@";
-  return;
+    command svn "$@";
+    return;
 fi
 
 # For 'svn log' and 'svn diff' pipe output through colordiff
 if [[ "x$1" == "xlog" ]];
 then
-  command svn "$@" -r 0:HEAD | colordiff;
-  return;
+    command svn "$@" -r 0:HEAD | colordiff;
+    return;
 fi
 if [[ "x$1" == "xdiff" ]];
 then
-  command svn "$@" | colordiff;
-  return;
+    command svn "$@" | colordiff;
+    return;
 fi
 
 
@@ -114,33 +100,33 @@ BEGIN {
 cpt_c=0;
 }
 {
-  if ($1=="C") {
-    cpt_c=cpt_c+1;
-    print "\033[31m" $0 "\033[00m"; # Conflicts are displayed in red
-  }
+    if ($1=="C") {
+        cpt_c=cpt_c+1;
+        print "\033[31m" $0 "\033[00m"; # Conflicts are displayed in red
+    }
 else if ($1=="M") {
-  print "\033[31m" $0 "\033[00m"; # Modified in red
+    print "\033[31m" $0 "\033[00m"; # Modified in red
 }
 else if ($1=="A") {
-  print "\033[32m" $0 "\033[00m"; # Add in green
+    print "\033[32m" $0 "\033[00m"; # Add in green
 }
 else if ($1=="?") {
-  print "\033[36m" $0 "\033[00m"; # New in cyan
+    print "\033[36m" $0 "\033[00m"; # New in cyan
 }
 else if ($1=="D") {
-  print "\033[31m" $0 "\033[00m"; # Delete in red
+    print "\033[31m" $0 "\033[00m"; # Delete in red
 }
 else if ($1=="U") {
-  print "\033[35m" $0 "\033[00m"; # Updated in light magenta
+    print "\033[35m" $0 "\033[00m"; # Updated in light magenta
 }
 else if ($1=="X") {
-  print "\033[33m" $0 "\033[00m"; # No changes in yellow.
+    print "\033[33m" $0 "\033[00m"; # No changes in yellow.
 }
 else if ($1=="At" || $1 == "External") {
-  print "\033[33m" $0 "\033[00m"; # Revision numbers in brown.
+    print "\033[33m" $0 "\033[00m"; # Revision numbers in brown.
 }
 else {
-  print $0; # No color, just print the line
+    print $0; # No color, just print the line
 }
 }
 END {

@@ -66,6 +66,10 @@ function pdfmerge() {
     gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$TARGET" "$@"
 }
 
+function genpasswd() {
+    tr -cd '[:alnum:]' < /dev/urandom|head -c $1
+}
+
 # send notification when program terminates
 function notify() {
     $*; notify-send "Task done." "Executed '$*'.\nreturn code: $?"

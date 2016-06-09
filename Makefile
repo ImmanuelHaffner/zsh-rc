@@ -8,3 +8,4 @@ install:
 
 install-all: install
 	sudo cp zshrc /etc/zsh/zshrc
+	sudo cp -R dircolors.d/ /etc

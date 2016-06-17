@@ -72,7 +72,7 @@ function genpasswd() {
 
 # send notification when program terminates
 function notify() {
-    $*; notify-send "Task done." "Executed '$*'.\nreturn code: $?"
+    $*; notify-send --urgency=critical "Task completed." "Executed '$*'.\nreturn code: $?"
 }
 
 

@@ -39,7 +39,7 @@ alias z='zathura'
 
 # Others
 alias sxiv='sxiv-rifle'
-alias py=python3
+alias py='python3'
 alias weather='curl -4 www.wttr.in'
 
 function pfind() {

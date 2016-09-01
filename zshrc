@@ -15,25 +15,6 @@ if [ -d "${HOME}/.bin" ]; then
     PATH="${HOME}/.bin:${PATH}"
 fi
 
-# Miscellanneous
-alias ls='/usr/bin/ls -C --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
-alias ll='/usr/bin/ls -lsh --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
-alias la='/usr/bin/ls -lash --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
-alias lsd='/usr/bin/ls -lsth --time-style=+"%d.%m.%Y %H:%M" --color=always -c -F'
-
-alias grep='grep --color=always -d skip'
-alias cp="cp -i"                          # confirm before overwriting something
-alias df='df -h'                          # human-readable sizes
-alias free='free -m'                      # show sizes in MB
-alias vp='vim PKGBUILD'
-alias vs='vim SPLITBUILD'
-
-# Create new directory and cd into it
-function md() {
-    mkdir -p "$*"
-    cd "$*"
-}
-
 # Extract an archive
 function extract () {
     if [ -f $1 ]; then
@@ -56,6 +37,6 @@ function extract () {
 }
 
 # Source user-specific .zshrc files
-if [ -f "${HOME}/.zshrc" ]; then
-    source "${HOME}/.zshrc"
-fi
+#if [ -f "${HOME}/.zshrc" ]; then
+    #source "${HOME}/.zshrc"
+#fi

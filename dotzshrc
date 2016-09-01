@@ -9,6 +9,7 @@ DISABLE_AUTO_UPDATE="true"
 plugins=(git git-extras gitfast themes archlinux battery cp history compleat)
 source $ZSH/oh-my-zsh.sh
 
+export EDITOR=nvim
 export ANDROID_HOME=/opt/android-sdk
 alias uni='cd /home/immanuel/Documents/University/'
 
@@ -21,6 +22,17 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'page faults from disk:     %F'$'\n'\
 'other page faults:         %R'
 
+# Miscellanneous
+alias ls='/usr/bin/ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
+alias ll='ls -lsh'
+alias la='ll -a'
+alias lsd='ll -t'
+
+alias grep='grep --color=always -d skip'
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias du='du -h'
+alias free='free -m'                      # show sizes in MB
 
 # NeoVim & VIm
 alias n='nvim'
@@ -46,6 +58,11 @@ function pfind() {
     ps wwup `pgrep "$1"`
 }
 
+# Create directory and cd into
+function mkcd() {
+    mkdir -p "$*"
+    cd "$@"
+}
 
 # extended `lsblk'
 alias lsblk='lsblk -o SIZE,NAME,VENDOR,MODEL,LABEL,FSTYPE,RO,TYPE,MOUNTPOINT,UUID'

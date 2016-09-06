@@ -45,6 +45,48 @@ alias glg='git lg'
 alias gst='git st'
 alias gg='git get'
 alias gdx='git dx'
+# git difftool with 3-way diff
+function gdiff() {
+    LOCAL=$1
+    REMOTE=$2
+    BASE=$(git merge-base "${LOCAL}" "${REMOTE}")
+
+    mkdir -p /tmp/gdiff
+
+    if [ $? -ne 0 ]; then
+        echo "ERROR: no merge-base found for ${LOCAL} and ${REMOTE}"
+        exit 1
+    fi
+
+    echo "LOCAL: ${LOCAL}"
+    echo "REMOTE: ${REMOTE}"
+    echo "BASE: ${BASE}"
+
+    for file in $(git diff --name-only "${LOCAL}" "${REMOTE}"); do
+        echo -n "View '${file}' (Y/n/q)? "
+        read yn
+        case "${yn}" in
+            n|N ) continue;;
+            q|Q ) break;;
+            y|Y ) ;;
+            * ) ;;
+        esac
+
+        LOCALFILE=$(mktemp "/tmp/gdiff/${file}.LOCAL.XXXX")
+        REMOTEFILE=$(mktemp "/tmp/gdiff/${file}.REMOTE.XXXX")
+        BASEFILE=$(mktemp "/tmp/gdiff/${file}.BASE.XXXX")
+
+        git cat-file blob "${LOCAL}:${file}"    > "${LOCALFILE}"    2> /dev/null
+        git cat-file blob "${REMOTE}:${file}"   > "${REMOTEFILE}"   2> /dev/null
+        git cat-file blob "${BASE}:${file}"     > "${BASEFILE}"     2> /dev/null
+
+        nvim -d "${BASEFILE}" "${LOCALFILE}" "${REMOTEFILE}"
+
+        rm "${LOCALFILE}"
+        rm "${REMOTEFILE}"
+        rm "${BASEFILE}"
+    done
+}
 
 # Zathura
 alias zathura='/usr/bin/zathura --fork > /dev/null 2>&1'

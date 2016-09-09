@@ -7,7 +7,7 @@ ZSH=${HOME}/.oh-my-zsh
 ZSH_CACHE_DIR="/tmp/zsh_cache"
 ZSH_THEME="agnoster"
 DISABLE_AUTO_UPDATE="true"
-plugins=(git git-extras gitfast themes archlinux battery cp history compleat)
+plugins=(git git-extras gitfast themes archlinux battery cp history compleat per-directory-history)
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR=nvim

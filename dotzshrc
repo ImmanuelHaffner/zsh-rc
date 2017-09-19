@@ -198,3 +198,8 @@ END {
 print cpt_c, " conflicts are found.";
 }';
 }
+
+function pip-update-all()
+{
+    sudo pip install -U $(pip freeze | awk '{split($0, a, "=="); print a[1]}')
+}

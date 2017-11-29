@@ -25,7 +25,7 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'other page faults:         %R'
 
 # Miscellanneous
-alias ls='/usr/bin/ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
+alias ls='/bin/ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
 alias ll='ls -lsh'
 alias la='ll -a'
 alias lsd='ll -t'

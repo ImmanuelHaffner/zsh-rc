@@ -3,6 +3,8 @@
 # oh-my-zsh
 export DEFAULT_USER=immanuel
 export EDITOR=nvim
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
 export ANDROID_HOME=/opt/android-sdk
 export PYTHONIOENCODING=utf-8
 

@@ -214,3 +214,8 @@ function pip-update-all()
 {
     sudo pip install -U $(pip freeze | awk '{split($0, a, "=="); print a[1]}')
 }
+
+function sakura()
+{
+    /usr/bin/sakura --working-directory "$(pwd)" "$@" &>/dev/null &
+}

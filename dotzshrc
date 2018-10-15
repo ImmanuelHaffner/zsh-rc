@@ -217,5 +217,6 @@ function pip-update-all()
 
 function sakura()
 {
-    /usr/bin/sakura --working-directory "$(pwd)" "$@" &>/dev/null &
+    /usr/bin/setsid --fork /usr/bin/sakura --working-directory "$(pwd)" "$@" &>/dev/null
 }
+alias fork=sakura

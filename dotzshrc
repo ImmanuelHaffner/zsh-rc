@@ -100,9 +100,24 @@ function gdiff() {
     done
 }
 
-# Zathura
-alias zathura='/usr/bin/zathura --fork > /dev/null 2>&1'
-alias z='zathura'
+# Tabbed Zathura
+function Tabthura() {
+    if [ $# -lt 1 ]; then
+        return
+    fi
+
+    if [ $# -eq 1 ]; then
+        /usr/bin/zathura --fork "$1" >/dev/null 2>&1
+        return
+    fi
+
+    XID=$(tabbed -d -c -n "Tabthura" 2>/dev/null)
+    for file in $@; do
+        /usr/bin/zathura --reparent=${XID} --fork "${file}" >/dev/null 2>&1
+    done
+}
+alias zathura='Tabthura'
+alias z='Tabthura'
 
 # Others
 alias sxiv='sxiv-rifle'

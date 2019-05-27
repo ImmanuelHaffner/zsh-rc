@@ -43,7 +43,7 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 
 # Useful commands
 alias ls='/bin/ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
-alias ll='ls -lsh'
+alias ll='ls -lh'
 alias la='ll -a'
 alias lsd='ll -t'
 

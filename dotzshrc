@@ -1,6 +1,19 @@
 # vim: set filetype=zsh:
 
-# oh-my-zsh
+# Antigen
+source /usr/share/zsh/share/antigen.zsh
+antigen use oh-my-zsh
+antigen bundle git
+antigen bundle git-extras
+antigen bundle pip
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen theme romkatv/powerlevel10k
+antigen apply
+
+# load global zshrc
+source /etc/zsh/zshrc
+
+# globals
 export DEFAULT_USER=immanuel
 export EDITOR=nvim
 export CC=/usr/bin/clang
@@ -19,38 +32,6 @@ export CPUPROFILE_FREQUENCY=100000
 
 setopt ignoreeof # ignore Ctrl+D
 
-# extended output for `time' command
-TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
-'avg shared (code):         %X KB'$'\n'\
-'avg unshared (data/stack): %D KB'$'\n'\
-'total (sum):               %K KB'$'\n'\
-'max memory:                %M MB'$'\n'\
-'page faults from disk:     %F'$'\n'\
-'other page faults:         %R'
-
-# Miscellanneous
-alias ls='/bin/ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
-alias ll='ls -lsh'
-alias la='ll -a'
-alias lsd='ll -t'
-
-alias grep='grep --color=always -d skip'
-alias cp="cp -i"                          # confirm before overwriting something
-alias df='df -h'                          # human-readable sizes
-alias du='du -h'
-alias free='free -m'                      # show sizes in MB
-
-# NeoVim & VIm
-alias n='nvim'
-alias nsu='sudo -E nvim'
-alias visu='sudo -E vim'
-
-# Git
-alias glg='git lg'
-alias glga='git lga'
-alias gst='git st'
-alias gg='git get'
-alias gdx='git dx'
 # git difftool with 3-way diff
 function gdiff() {
     LOCAL=$1
@@ -129,10 +110,6 @@ function mkcd() {
     cd "$@"
 }
 
-# extended `lsblk'
-alias lsblk='lsblk -o SIZE,NAME,VENDOR,MODEL,LABEL,FSTYPE,RO,TYPE,MOUNTPOINT,UUID'
-
-
 # useful `youtube-dl' flags
 function ytdl() {
     youtube-dl -v --yes-playlist -o '%(title)s.%(ext)s' -x --audio-quality 0 --audio-format "mp3" --add-metadata --metadata-from-title '%(artist)s - %(title)s' "$@"
@@ -148,15 +125,10 @@ function pdfmerge() {
     gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$TARGET" "$@"
 }
 
-function genpasswd() {
-    tr -cd '[:alnum:]' < /dev/urandom|head -c $1
-}
-
 # send notification when program terminates
 function notify() {
     $*; notify-send --urgency=critical "Task completed." "Executed '$*'.\nreturn code: $?"
 }
-
 
 # colorize SVN
 function svn {
@@ -178,7 +150,6 @@ then
     command svn "$@" | colordiff;
     return;
 fi
-
 
 # Pipe svn through awk to colorize its output.
 command svn "$@" | awk '
@@ -230,12 +201,3 @@ function sakura()
     /usr/bin/setsid --fork /usr/bin/sakura --working-directory "$(pwd)" "$@" &>/dev/null
 }
 alias fork=sakura
-
-# Antigen
-source /usr/share/zsh/share/antigen.zsh
-antigen use oh-my-zsh
-antigen bundle git
-antigen bundle pip
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen theme romkatv/powerlevel10k
-antigen apply

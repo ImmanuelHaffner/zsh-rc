@@ -5,11 +5,6 @@ elif [ -f "/etc/dircolors.d/dircolors.256dark" ]; then
     eval $(dircolors -b "/etc/dircolors.d/dircolors.256dark")
 fi
 
-# syntax highlighting
-if [ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-    source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
-
 # Prepend user-specific bin/ paths
 if [ -d "${HOME}/.bin" ]; then
     PATH="${HOME}/.bin:${PATH}"
@@ -37,7 +32,43 @@ function extract () {
     fi
 }
 
-# Source user-specific .zshrc files
-#if [ -f "${HOME}/.zshrc" ]; then
-    #source "${HOME}/.zshrc"
-#fi
+# extended output for `time' command
+TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
+'avg shared (code):         %X KB'$'\n'\
+'avg unshared (data/stack): %D KB'$'\n'\
+'total (sum):               %K KB'$'\n'\
+'max memory:                %M MB'$'\n'\
+'page faults from disk:     %F'$'\n'\
+'other page faults:         %R'
+
+# Useful commands
+alias ls='/bin/ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
+alias ll='ls -lsh'
+alias la='ll -a'
+alias lsd='ll -t'
+
+alias grep='grep --color=always -d skip'
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias du='du -h'
+alias free='free -m'                      # show sizes in MB
+
+# NeoVim & VIm
+alias n='nvim'
+alias nsu='sudo -E nvim'
+alias visu='sudo -E vim'
+
+# Git
+alias glg='git lg'
+alias glga='git lga'
+alias gst='git st'
+alias gg='git get'
+alias gdx='git dx'
+
+# lsblk
+alias lsblk='lsblk -o SIZE,NAME,VENDOR,MODEL,LABEL,FSTYPE,RO,TYPE,MOUNTPOINT,UUID'
+
+# random password generator
+function genpasswd() {
+    tr -cd '[:alnum:]' < /dev/urandom|head -c $1
+}

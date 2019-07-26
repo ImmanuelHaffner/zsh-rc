@@ -27,7 +27,7 @@ export ANDROID_HOME=/opt/android-sdk
 export PYTHONIOENCODING=utf-8
 
 # PATH
-export PATH=$PATH:/home/immanuel/.gem/ruby/2.5.0/bin
+export PATH="$PATH:/home/immanuel/.gem/ruby/2.5.0/bin:/opt/depot_tools"
 
 # Ninja
 export NINJA_STATUS="[%p|%s/%t|%es] "

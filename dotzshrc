@@ -221,7 +221,11 @@ function termcolors()
     echo "";
 }
 
-if [ -x ".project.zsh" ];
-then
-    source ".project.zsh"
-fi
+function chpwd()
+{
+    emulate -L zsh
+    if [ -x ".project.zsh" ];
+    then
+        source ".project.zsh"
+    fi
+}

@@ -220,3 +220,8 @@ function termcolors()
     done;
     echo "";
 }
+
+if [ -x ".project.zsh" ];
+then
+    source ".project.zsh"
+fi

@@ -229,3 +229,9 @@ function chpwd()
         source ".project.zsh"
     fi
 }
+
+function scr()
+{
+    xrandr --output DP2 --preferred --same-as eDP1 --output DP1-2-8 --preferred --right-of eDP1 --rotate left
+    xbacklight -set 0
+}

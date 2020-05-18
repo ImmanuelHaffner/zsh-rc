@@ -5,11 +5,6 @@ elif [ -f "/etc/dircolors.d/dircolors.256dark" ]; then
     eval $(dircolors -b "/etc/dircolors.d/dircolors.256dark")
 fi
 
-# Prepend user-specific bin/ paths
-if [ -d "${HOME}/.bin" ]; then
-    PATH="${HOME}/.bin:${PATH}"
-fi
-
 # Extract an archive
 function extract () {
     if [ -f "$1" ]; then

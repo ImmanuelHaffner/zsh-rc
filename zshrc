@@ -59,11 +59,14 @@ alias nsu='sudo -E nvim'
 alias visu='sudo -E vim'
 
 # Git
+alias g='git'
+alias gsw='git switch'
 alias glg='git lg'
 alias glga='git lga'
 alias gst='git st'
 alias gg='git get'
 alias gdx='git dx'
+alias gd='git diff'
 
 # lsblk
 alias lsblk='lsblk -o SIZE,NAME,VENDOR,MODEL,LABEL,FSTYPE,RO,TYPE,MOUNTPOINT,UUID'

@@ -227,6 +227,15 @@ function chpwd()
 
 function scr()
 {
-    xrandr --output DP2 --preferred --same-as eDP1 --output DP1-2-8 --preferred --right-of eDP1 --rotate left
-    xbacklight -set 0
+    xrandr --output eDP1 --off
+    xrandr --output DP2 --primary --preferred && \
+        xrandr --output DP1-2-8 --preferred --right-of DP2 --rotate left && \
+        xrandr --output eDP1 --preferred --left-of DP2 && \
+        xbacklight -set 75
+    RET=$?
+    if [ ${RET} -ne 0 ];
+    then
+        xrandr --output eDP1 --primary --preferred
+        xbacklight -set 75
+    fi
 }

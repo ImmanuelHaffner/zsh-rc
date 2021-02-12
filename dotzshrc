@@ -4,6 +4,7 @@
 POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_DIR_SHOW_WRITABLE=true
+DISABLE_MAGIC_FUNCTIONS=true
 
 # Antigen
 source /usr/share/zsh/share/antigen.zsh

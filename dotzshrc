@@ -242,3 +242,8 @@ function scr()
         xbacklight -set 75
     fi
 }
+
+function list-by-storage()
+{
+    ls -A1 --color=never --classify=never --file-type | xargs -d '\n' du -hs | sort -h | tail -n 10
+}

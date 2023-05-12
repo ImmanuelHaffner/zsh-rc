@@ -19,6 +19,7 @@ source /etc/zsh/zshrc
 
 # globals
 export DEFAULT_USER=immanuel
+export TERMINAL=/usr/bin/wezterm
 export EDITOR=nvim
 export DIFFPROG=nvimdiff # our thin wrapper around nvim
 export CC=/usr/bin/clang
@@ -201,11 +202,10 @@ function pip-update-all()
     sudo pip install -U $(pip freeze | awk '{split($0, a, "=="); print a[1]}')
 }
 
-function sakura()
+function fork()
 {
-    /usr/bin/setsid --fork /usr/bin/sakura --working-directory "$(pwd)" "$@" &>/dev/null
+    /usr/bin/setsid --fork ${TERMINAL} start --cwd "$(pwd)" "$@" &>/dev/null
 }
-alias fork=sakura
 
 function termcolors()
 {

@@ -248,3 +248,14 @@ function list-by-storage()
 {
     ls -A1 --color=never --classify=never --file-type | xargs -d '\n' du -hs | sort -h | tail -n 10
 }
+
+
+########################################################################################################################
+### Erdtree Aliases
+########################################################################################################################
+
+alias et=erd
+alias l='erd --level 1 --no-git'
+alias ll='erd --level 1 --no-git'
+alias la='ls -.'
+alias lr='la --level 5' # 5 levels should suffice

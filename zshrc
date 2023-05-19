@@ -65,7 +65,7 @@ alias glg='git lg'
 alias glga='git lga'
 alias gst='git st'
 alias gg='git get'
-alias gdx='git dx'
+alias gdx='git dc'
 alias gd='git diff'
 
 # lsblk

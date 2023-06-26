@@ -1,10 +1,14 @@
 # vim: set filetype=zsh:
 
 # Powerlevel10k
-POWERLEVEL9K_MODE='awesome-fontconfig'
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-POWERLEVEL9K_DIR_SHOW_WRITABLE=true
-DISABLE_MAGIC_FUNCTIONS=true
+export POWERLEVEL9K_MODE='awesome-fontconfig'
+export POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+export POWERLEVEL9K_DIR_SHOW_WRITABLE=true
+
+# OH-MY-ZSH
+export DISABLE_MAGIC_FUNCTIONS=true
+export COMPLETION_WAITING_DOTS=true
+export CASE_SENSITIVE=false
 
 # Antigen
 source /usr/share/zsh/share/antigen.zsh

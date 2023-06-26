@@ -29,7 +29,7 @@ export PYTHONIOENCODING=utf-8
 export GPG_TTY=$(tty) # see https://github.com/keybase/keybase-issues/issues/2798
 
 # PATH
-export PATH="$PATH:/home/immanuel/.local/share/gem/ruby/3.0.0/bin:/opt/depot_tools"
+export PATH="$PATH:${HOME}/.local/share/gem/ruby/3.0.0/bin:${HOME}/.local/share/depot_tools"
 
 # Ninja
 export NINJA_STATUS="[%p|%s/%t|%es] "

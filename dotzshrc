@@ -278,6 +278,6 @@ function list-by-storage()
 alias et=erd
 alias l='erd --level 1'
 alias ll='erd --level 1 --long'
-alias la='ll --hidden --no-git'
-alias lr='l --level 5' # 5 levels should suffice
-alias lar='la --level 5' # 5 levels should suffice
+alias la='erd --level 1 --long --hidden --no-git'
+alias lr='erd --level 5' # 5 levels should suffice
+alias lar='erd --level 5 --long' # 5 levels should suffice

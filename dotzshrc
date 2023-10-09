@@ -119,9 +119,7 @@ function Tabthura() {
         /usr/bin/zathura --reparent=${XID} --fork "${file}" >/dev/null 2>&1
     done
 }
-compctl -g "*.(pdf|ps|djvu)" Tabthura
 alias zathura='Tabthura'
-alias z='Tabthura'
 
 # Others
 alias py='python3'

@@ -279,3 +279,17 @@ alias ll='erd --level 1 --long'
 alias la='erd --level 1 --long --hidden --no-git'
 alias lr='erd --level 5' # 5 levels should suffice
 alias lar='erd --level 5 --long' # 5 levels should suffice
+
+
+########################################################################################################################
+### Initialize Zoxide
+########################################################################################################################
+if [ -x "$(which zoxide)" ];
+then
+    function z () {
+      __zoxide_z $@
+    }
+    compdef z="_z"
+
+    eval "$(zoxide init zsh --no-cmd)"
+fi

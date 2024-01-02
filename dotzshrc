@@ -289,7 +289,5 @@ then
     function z () {
       __zoxide_z $@
     }
-    compdef z="_z"
-
     eval "$(zoxide init zsh --no-cmd)"
 fi

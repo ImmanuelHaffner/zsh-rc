@@ -61,6 +61,9 @@ export CPUPROFILE_FREQUENCY=100000
 # Disable depot tools auto-update
 export DEPOT_TOOLS_UPDATE=0
 
+# SSH agent as systemd daemon
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 setopt ignoreeof # ignore Ctrl+D
 
 # git difftool with 3-way diff

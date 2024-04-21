@@ -50,16 +50,13 @@ export PYTHONIOENCODING=utf-8
 export GPG_TTY=$(tty) # see https://github.com/keybase/keybase-issues/issues/2798
 
 # PATH
-export PATH="$PATH:${HOME}/.local/share/gem/ruby/3.0.0/bin:${HOME}/.local/share/depot_tools"
+export PATH="$PATH:${HOME}/.local/share/gem/ruby/3.0.0/bin"
 
 # Ninja
 export NINJA_STATUS="[%p|%s/%t|%es] "
 
 # GPerfTools
 export CPUPROFILE_FREQUENCY=100000
-
-# Disable depot tools auto-update
-export DEPOT_TOOLS_UPDATE=0
 
 # SSH agent as systemd daemon
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"

@@ -283,16 +283,6 @@ alias la='erd --suppress-size --level 1 --long --hidden --no-git'
 alias lr='erd --suppress-size --level 5' # 5 levels should suffice
 alias lar='erd --suppress-size --level 5 --long' # 5 levels should suffice
 
-########################################################################################################################
-### Firbolt AWS & Docker Setup
-########################################################################################################################
-
-function firebolt_sso()
-{
-    ${HOME}/Documents/Firebolt/code/aws-sso-ssm/sso-login.sh publishing
-    AWS_PROFILE=publishing ${HOME}/Documents/Firebolt/code/aws-sso-ssm/docker-login.sh
-}
-
 
 ########################################################################################################################
 ### Initialize Zoxide

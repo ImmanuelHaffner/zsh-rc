@@ -59,7 +59,11 @@ export NINJA_STATUS="[%p|%s/%t|%es] "
 export CPUPROFILE_FREQUENCY=100000
 
 # SSH agent as systemd daemon
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ];
+then
+    # Not an SSH session, so set up SSH agent
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+fi
 
 setopt ignoreeof # ignore Ctrl+D
 

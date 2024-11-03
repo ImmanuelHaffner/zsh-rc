@@ -256,21 +256,6 @@ function chpwd()
     fi
 }
 
-function scr()
-{
-    xrandr --output eDP1 --off
-    xrandr --output DP2 --primary --preferred && \
-        xrandr --output DP1-2-8 --preferred --right-of DP2 --rotate left && \
-        xrandr --output eDP1 --preferred --left-of DP2 && \
-        xbacklight -set 75
-    RET=$?
-    if [ ${RET} -ne 0 ];
-    then
-        xrandr --output eDP1 --primary --preferred
-        xbacklight -set 75
-    fi
-}
-
 function list-by-storage()
 {
     ls -A1 --color=never --classify=never --file-type | xargs -d '\n' du -hs | sort -h | tail -n 10

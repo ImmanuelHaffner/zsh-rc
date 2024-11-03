@@ -59,6 +59,10 @@ export NINJA_STATUS="[%p|%s/%t|%es] "
 # GPerfTools
 export CPUPROFILE_FREQUENCY=100000
 
+# Enable DPI scaling for QT apps
+export QT_SCALE_FACTOR=1
+export QT_AUTO_SCREEN_SCALE_FACTOR=true
+
 # SSH agent as systemd daemon
 if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ];
 then

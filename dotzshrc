@@ -39,29 +39,7 @@ antigen apply
 source /etc/zsh/zshrc
 
 # globals
-export DEFAULT_USER=immanuel
-export TERMINAL=/usr/bin/wezterm
-export EDITOR=nvim
-export PAGER=bat
 export DIFFPROG=nvimdiff # our thin wrapper around nvim
-export CC=/usr/bin/clang
-export CXX=/usr/bin/clang++
-export ANDROID_HOME=/opt/android-sdk
-export PYTHONIOENCODING=utf-8
-#export GPG_TTY=$(tty) # see https://github.com/keybase/keybase-issues/issues/2798
-
-# PATH
-export PATH="$PATH:${HOME}/.local/share/gem/ruby/3.0.0/bin"
-
-# Ninja
-export NINJA_STATUS="[%p|%s/%t|%es] "
-
-# GPerfTools
-export CPUPROFILE_FREQUENCY=100000
-
-# Enable DPI scaling for QT apps
-export QT_SCALE_FACTOR=1
-export QT_AUTO_SCREEN_SCALE_FACTOR=true
 
 # SSH agent as systemd daemon
 if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ];
@@ -70,7 +48,8 @@ then
     export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 fi
 
-setopt ignoreeof # ignore Ctrl+D
+# ignore Ctrl+D
+setopt ignoreeof
 
 # git difftool with 3-way diff
 function gdiff() {

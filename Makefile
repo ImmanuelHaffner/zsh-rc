@@ -5,6 +5,7 @@ all:
 
 install:
 	cp dotzshrc ~/.zshrc
+	cp zprofile ~/.zprofile
 
 install-all: install
 	sudo cp zshrc /etc/zsh/zshrc

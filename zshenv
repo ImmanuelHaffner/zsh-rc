@@ -1,4 +1,4 @@
-# vim: set filetype=bash:
+# vim: set filetype=zsh:
 
 export DEFAULT_USER=immanuel
 export TERMINAL=/usr/bin/wezterm
@@ -8,7 +8,7 @@ export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 export ANDROID_HOME=/opt/android-sdk
 export PYTHONIOENCODING=utf-8
-export GPG_TTY=$(tty) # see https://github.com/keybase/keybase-issues/issues/2798
+export GPG_TTY=$(tty)  # see https://github.com/keybase/keybase-issues/issues/2798
 
 # PATH
 export PATH="$PATH:${HOME}/.local/share/gem/ruby/3.0.0/bin"

@@ -15,7 +15,7 @@ export PATH="$PATH:${HOME}/.local/share/gem/ruby/3.0.0/bin"
 
 # Enable DPI scaling for QT apps
 export QT_SCALE_FACTOR=1
-export QT_AUTO_SCREEN_SCALE_FACTOR=true
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
 
 # Ninja
 export NINJA_STATUS="[%p|%s/%t|%es] "

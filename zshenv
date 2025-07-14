@@ -11,7 +11,7 @@ export PYTHONIOENCODING=utf-8
 export GPG_TTY=$(tty)  # see https://github.com/keybase/keybase-issues/issues/2798
 
 # PATH
-export PATH="$PATH:${HOME}/.local/share/gem/ruby/3.0.0/bin"
+export PATH="$PATH:${HOME}/.local/share/gem/ruby/3.0.0/bin:${HOME}/.local/node_modules/.bin"
 
 # Enable DPI scaling for QT apps
 export QT_SCALE_FACTOR=1

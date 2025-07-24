@@ -13,6 +13,12 @@ export GPG_TTY=$(tty)  # see https://github.com/keybase/keybase-issues/issues/27
 # PATH
 export PATH="$PATH:${HOME}/.local/share/gem/ruby/3.0.0/bin:${HOME}/.local/node_modules/.bin"
 
+# Add local bin to $PATH
+if [ -d "${HOME}/.local/bin" ]; then
+    export PATH="${HOME}/.local/bin:${PATH}"
+fi
+
+
 # Enable DPI scaling for QT apps
 export QT_SCALE_FACTOR=1
 export QT_AUTO_SCREEN_SCALE_FACTOR=1

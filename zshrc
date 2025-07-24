@@ -5,11 +5,6 @@ elif [ -f "/etc/dircolors.d/dircolors.256dark" ]; then
     eval $(dircolors -b "/etc/dircolors.d/dircolors.256dark")
 fi
 
-# Add local bin to $PATH
-if [ -d "${HOME}/.local/bin" ]; then
-    export PATH="${HOME}/.local/bin:${PATH}"
-fi
-
 # Extract an archive
 function extract () {
     if [ -f "$1" ]; then

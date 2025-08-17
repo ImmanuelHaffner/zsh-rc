@@ -33,6 +33,7 @@ antigen use oh-my-zsh
 antigen bundle pip
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle per-directory-history
+antigen bundle joshskidmore/zsh-fzf-history-search
 antigen theme romkatv/powerlevel10k
 antigen apply
 antigen cache

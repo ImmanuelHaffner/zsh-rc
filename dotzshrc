@@ -36,7 +36,7 @@ antigen bundle per-directory-history
 antigen bundle joshskidmore/zsh-fzf-history-search
 antigen theme romkatv/powerlevel10k
 antigen apply
-antigen cache
+antigen cache-gen
 
 source /etc/zsh/zshrc
 

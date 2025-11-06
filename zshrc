@@ -1,8 +1,13 @@
 # dircolors
-if [ -f "${HOME}/.config/shell/dircolors" ]; then
-    eval $(dircolors -b "${HOME}/.config/shell/dircolors")
-elif [ -f "/etc/dircolors.d/dircolors.256dark" ]; then
-    eval $(dircolors -b "/etc/dircolors.d/dircolors.256dark")
+if type dircolors > /dev/null;
+then
+    if [ -f "${HOME}/.config/shell/dircolors" ];
+    then
+        eval $(dircolors -b "${HOME}/.config/shell/dircolors")
+    elif [ -f "/etc/dircolors.d/dircolors.256dark" ];
+    then
+        eval $(dircolors -b "/etc/dircolors.d/dircolors.256dark")
+    fi
 fi
 
 # Extract an archive

@@ -1,9 +1,24 @@
 # vim: set filetype=zsh:
 
-export DEFAULT_USER=immanuel
+export DEFAULT_USER=$(whoami)
 export TERMINAL=/usr/bin/wezterm
-export EDITOR=nvim
-export PAGER=bat
+
+if type nvim > /dev/null;
+then
+    export EDITOR=nvim
+elif type vim > /dev/null;
+then
+    export EDITOR=vim
+fi
+
+if type bat > /dev/null;
+then
+    export PAGER=bat
+elif type batbat > /dev/null;
+then
+    export PAGER=batbat
+fi
+
 export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 export ANDROID_HOME=/opt/android-sdk

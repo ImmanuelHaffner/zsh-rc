@@ -17,6 +17,11 @@ then
 elif type batbat > /dev/null;
 then
     export PAGER=batbat
+    alias bat=batbat
+elif type batcat > /dev/null;
+then
+    export PAGER=batcat
+    alias bat=batcat
 fi
 
 export CC=/usr/bin/clang

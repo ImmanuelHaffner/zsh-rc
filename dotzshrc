@@ -39,11 +39,15 @@ setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording en
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 
 # Antigen
-if [ -f /usr/share/zsh/share/antigen.zsh ]
+if [ -f ~/.config/antigen.zsh ];
+then
+    # Custom
+    source ~/.config/antigen.zsh
+elif [ -f /usr/share/zsh/share/antigen.zsh ];
 then
     # On Linux
     source /usr/share/zsh/share/antigen.zsh
-elif [ -f /opt/homebrew/share/antigen/antigen.zsh ]
+elif [ -f /opt/homebrew/share/antigen/antigen.zsh ];
 then
     # On MacOS
     source /opt/homebrew/share/antigen/antigen.zsh

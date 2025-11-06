@@ -5,6 +5,17 @@ export POWERLEVEL9K_MODE='awesome-fontconfig'
 export POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 export POWERLEVEL9K_DIR_SHOW_WRITABLE=true
 
+# Only show context (user@hostname) when in SSH session or different user
+export POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='green'
+export POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND='red'
+export POWERLEVEL9K_CONTEXT_TEMPLATE='%n@%m'
+export POWERLEVEL9K_CONTEXT_DEFAULT_TEMPLATE='%n@%m'
+export POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n@%m'
+
+# Show context only when relevant (SSH, sudo, or different user than DEFAULT_USER)
+export POWERLEVEL9K_ALWAYS_SHOW_CONTEXT=false
+export POWERLEVEL9K_ALWAYS_SHOW_USER=false
+
 # OH-MY-ZSH
 export DISABLE_MAGIC_FUNCTIONS=false
 export COMPLETION_WAITING_DOTS=true
@@ -28,7 +39,15 @@ setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording en
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 
 # Antigen
-source /usr/share/zsh/share/antigen.zsh
+if [ -f /usr/share/zsh/share/antigen.zsh ]
+then
+    # On Linux
+    source /usr/share/zsh/share/antigen.zsh
+elif [ -f /opt/homebrew/share/antigen/antigen.zsh ]
+then
+    # On MacOS
+    source /opt/homebrew/share/antigen/antigen.zsh
+fi
 antigen use oh-my-zsh
 antigen bundle pip
 antigen bundle zsh-users/zsh-syntax-highlighting

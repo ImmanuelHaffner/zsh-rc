@@ -66,11 +66,29 @@ source /etc/zsh/zshrc
 # globals
 export DIFFPROG=nvimdiff # our thin wrapper around nvim
 
-# SSH agent as systemd daemon
+# SSH agent setup - OS specific
 if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ];
 then
     # Not an SSH session, so set up SSH agent
-    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+    case "$(uname)" in
+        Linux)
+            # Linux: use systemd daemon socket
+            export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+            ;;
+        Darwin)
+            # macOS: ssh-agent (dealing with weirdly inconsistent socket path)
+            possible_sockets=(/private/tmp/com.apple.launchd.*/Listeners)
+            if [[ ${#possible_sockets[@]} -gt 0 ]]; then
+                echo "Found multiple possible ssh-agent sockets; you should probably investigate this." >&2
+            fi
+            for possible_socket in "${possible_sockets[@]}"; do
+                if [[ -e "$possible_socket" ]]; then
+                    export SSH_AUTH_SOCK="$possible_socket"
+                    break
+                fi
+            done
+            ;;
+    esac
 fi
 
 # ignore Ctrl+D

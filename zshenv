@@ -14,14 +14,18 @@ fi
 if type bat > /dev/null;
 then
     export PAGER=bat
-elif type batbat > /dev/null;
-then
-    export PAGER=batbat
-    alias bat=batbat
 elif type batcat > /dev/null;
 then
-    export PAGER=batcat
-    alias bat=batcat
+    # Install local `bat` to invoke `batcat`
+    if [ ! -f "${HOME}/.local/bin/bat" ];
+    then
+        cat >> "${HOME}/.local/bin/bat" <<'EOF'
+#!/bin/bash
+/bin/batcat "$@"
+EOF
+        chmod a+x "${HOME}/.local/bin/bat"
+    fi
+    export PAGER=bat
 fi
 
 export CC=/usr/bin/clang

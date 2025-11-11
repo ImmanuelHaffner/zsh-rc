@@ -42,7 +42,15 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'other page faults:         %R'
 
 # Useful commands
-alias ls='/bin/ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
+case "$(uname)" in
+    Darwin)
+        alias ls='/bin/ls -D=+"%d.%m.%Y %H:%M" --color=always -F'
+        ;;
+
+    Linux)
+        alias ls='/bin/ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
+        ;;
+esac
 alias ll='ls -lh'
 alias la='ll -a'
 alias lsd='ll -t'

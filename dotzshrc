@@ -61,12 +61,77 @@ antigen theme romkatv/powerlevel10k
 antigen apply
 antigen cache-gen
 
-source /etc/zsh/zshrc
 
-# globals
+########################################################################################################################
+### Import global zshrc
+########################################################################################################################
+
+if [ -f /etc/zsh/zshrc ]; then
+    source /etc/zsh/zshrc
+fi
+
+
+########################################################################################################################
+### Settings
+########################################################################################################################
+
+# ignore Ctrl+D
+setopt ignoreeof
+
+
+########################################################################################################################
+### globals
+########################################################################################################################
+
 export DIFFPROG=nvimdiff # our thin wrapper around nvim
 
-# SSH agent setup - OS specific
+
+########################################################################################################################
+### Per-directory zshrc configuration
+########################################################################################################################
+
+function chpwd()
+{
+    emulate -L zsh
+    if [ -x ".project.zsh" ];
+    then
+        source ".project.zsh"
+    fi
+}
+
+
+########################################################################################################################
+### dircolors
+########################################################################################################################
+
+if type dircolors > /dev/null;
+then
+    if [ -f "${HOME}/.config/shell/dircolors" ];
+    then
+        eval $(dircolors -b "${HOME}/.config/shell/dircolors")
+    elif [ -f "/etc/dircolors.d/dircolors.256dark" ];
+    then
+        eval $(dircolors -b "/etc/dircolors.d/dircolors.256dark")
+    fi
+fi
+
+
+########################################################################################################################
+### extended output for `time' command
+########################################################################################################################
+
+TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
+'avg shared (code):         %X KB'$'\n'\
+'avg unshared (data/stack): %D KB'$'\n'\
+'total (sum):               %K KB'$'\n'\
+'max memory:                %M MB'$'\n'\
+'page faults from disk:     %F'$'\n'\
+'other page faults:         %R'
+
+
+########################################################################################################################
+### SSH agent setup - OS specific
+########################################################################################################################
 if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ];
 then
     # Not an SSH session, so set up SSH agent
@@ -91,77 +156,63 @@ then
     esac
 fi
 
-# ignore Ctrl+D
-setopt ignoreeof
 
-# git difftool with 3-way diff
-function gdiff() {
-    LOCAL=$1
-    REMOTE=$2
-    BASE=$(git merge-base "${LOCAL}" "${REMOTE}")
+########################################################################################################################
+### Useful commands
+########################################################################################################################
 
-    mkdir -p /tmp/gdiff
+# ls commands
+case "$(uname)" in
+    Darwin)
+        alias ls='/bin/ls -D=+"%d.%m.%Y %H:%M" --color=always -F'
+        ;;
 
-    if [ $? -ne 0 ]; then
-        echo "ERROR: no merge-base found for ${LOCAL} and ${REMOTE}"
-        exit 1
-    fi
+    Linux)
+        alias ls='/bin/ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=always -F'
+        ;;
+esac
+alias ll='ls -lh'
+alias la='ll -a'
+alias lsd='ll -t'
 
-    echo "LOCAL: ${LOCAL}"
-    echo "REMOTE: ${REMOTE}"
-    echo "BASE: ${BASE}"
+alias grep='grep -d skip'
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias du='du -h'
+alias free='free -m'                      # show sizes in MB
 
-    for file in $(git diff --name-only "${LOCAL}" "${REMOTE}"); do
-        echo -n "View '${file}' (Y/n/q)? "
-        read yn
-        case "${yn}" in
-            n|N ) continue;;
-            q|Q ) break;;
-            y|Y ) ;;
-            * ) ;;
-        esac
-
-        LOCALFILE=$(mktemp "/tmp/gdiff/${file}.LOCAL.XXXX")
-        REMOTEFILE=$(mktemp "/tmp/gdiff/${file}.REMOTE.XXXX")
-        BASEFILE=$(mktemp "/tmp/gdiff/${file}.BASE.XXXX")
-
-        git cat-file blob "${LOCAL}:${file}"    > "${LOCALFILE}"    2> /dev/null
-        git cat-file blob "${REMOTE}:${file}"   > "${REMOTEFILE}"   2> /dev/null
-        git cat-file blob "${BASE}:${file}"     > "${BASEFILE}"     2> /dev/null
-
-        nvim -d "${BASEFILE}" "${LOCALFILE}" "${REMOTEFILE}"
-
-        rm "${LOCALFILE}"
-        rm "${REMOTEFILE}"
-        rm "${BASEFILE}"
-    done
-}
-
-# Tabbed Zathura
-function Tabthura() {
-    if [ $# -lt 1 ]; then
-        return
-    fi
-
-    if [ $# -eq 1 ]; then
-        /usr/bin/zathura --fork "$1" >/dev/null 2>&1
-        return
-    fi
-
-    XID=$(tabbed -d -c -n "Tabthura" 2>/dev/null)
-    for file in $@; do
-        /usr/bin/zathura --reparent=${XID} --fork "${file}" >/dev/null 2>&1
-    done
-}
-alias zathura='Tabthura'
-
-# Others
 alias py='python3'
 alias weather='curl -4 www.wttr.in'
 
-function pfind() {
-    ps wwup `pgrep "$1"`
-}
+# NeoVim & VIm
+alias n='nvim'
+alias nsu='sudo -E nvim'
+alias visu='sudo -E vim'
+
+# Git
+alias g='git'
+alias gsw='git switch'
+alias glg='git lg'
+alias glga='git lga'
+alias gst='git st'
+alias gg='git get'
+alias gdx='git dc'
+alias gdc='git dc'
+alias gd='git diff'
+
+# lsblk
+alias lsblk='lsblk -o SIZE,NAME,VENDOR,MODEL,LABEL,FSTYPE,RO,TYPE,MOUNTPOINT,UUID'
+
+# simple `pfind` to find processes
+case "$(uname)" in
+    Darwin)
+        function pfind() { ps $(pgrep -f "$1") }
+        ;;
+
+    Linux)
+        function pfind() { ps wwup $(pgrep -f "$1") }
+        ;;
+esac
 
 # Create directory and cd into
 function mkcd() {
@@ -189,67 +240,6 @@ function notify() {
     $*; notify-send --urgency=critical "Task completed." "Executed '$*'.\nreturn code: $?"
 }
 
-# colorize SVN
-function svn {
-# Skip the color script when running an svn commit.
-if [[ "$1" == "ci" ]] || [[ "$1" == "commit" ]] || [[ "$1" == "add" ]];
-then
-    command svn "$@";
-    return;
-fi
-
-# For 'svn log' and 'svn diff' pipe output through colordiff
-if [[ "x$1" == "xlog" ]];
-then
-    command svn "$@" -r 0:HEAD | colordiff;
-    return;
-fi
-if [[ "x$1" == "xdiff" ]];
-then
-    command svn "$@" | colordiff;
-    return;
-fi
-
-# Pipe svn through awk to colorize its output.
-command svn "$@" | awk '
-BEGIN {
-cpt_c=0;
-}
-{
-    if ($1=="C") {
-        cpt_c=cpt_c+1;
-        print "\033[31m" $0 "\033[00m"; # Conflicts are displayed in red
-    }
-else if ($1=="M") {
-    print "\033[31m" $0 "\033[00m"; # Modified in red
-}
-else if ($1=="A") {
-    print "\033[32m" $0 "\033[00m"; # Add in green
-}
-else if ($1=="?") {
-    print "\033[36m" $0 "\033[00m"; # New in cyan
-}
-else if ($1=="D") {
-    print "\033[31m" $0 "\033[00m"; # Delete in red
-}
-else if ($1=="U") {
-    print "\033[35m" $0 "\033[00m"; # Updated in light magenta
-}
-else if ($1=="X") {
-    print "\033[33m" $0 "\033[00m"; # No changes in yellow.
-}
-else if ($1=="At" || $1 == "External") {
-    print "\033[33m" $0 "\033[00m"; # Revision numbers in brown.
-}
-else {
-    print $0; # No color, just print the line
-}
-}
-END {
-print cpt_c, " conflicts are found.";
-}';
-}
-
 function pip-update-all()
 {
     sudo pip install -U $(pip freeze | awk '{split($0, a, "=="); print a[1]}')
@@ -273,15 +263,6 @@ function termcolors()
     echo "";
 }
 
-function chpwd()
-{
-    emulate -L zsh
-    if [ -x ".project.zsh" ];
-    then
-        source ".project.zsh"
-    fi
-}
-
 function list-by-storage()
 {
     ls -A1 --color=never --classify=never --file-type | xargs -d '\n' du -hs | sort -h | tail -n 10
@@ -303,6 +284,7 @@ alias lar='erd --suppress-size --level 5 --long' # 5 levels should suffice
 ########################################################################################################################
 ### Initialize Zoxide
 ########################################################################################################################
+
 if [ -x "$(which zoxide)" ];
 then
     function z () {

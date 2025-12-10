@@ -53,3 +53,5 @@ export NINJA_STATUS="[%p|%s/%t|%es] "
 
 # GPerfTools
 export CPUPROFILE_FREQUENCY=100000
+
+export DIFFPROG=nvimdiff # our thin wrapper around nvim

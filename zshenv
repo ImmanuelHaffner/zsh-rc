@@ -31,6 +31,7 @@ fi
 export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 export ANDROID_HOME=/opt/android-sdk
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
 export PYTHONIOENCODING=utf-8
 export GPG_TTY=$(tty)  # see https://github.com/keybase/keybase-issues/issues/2798
 

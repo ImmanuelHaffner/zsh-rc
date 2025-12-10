@@ -56,7 +56,7 @@ antigen use oh-my-zsh
 antigen bundle pip
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle per-directory-history
-antigen bundle joshskidmore/zsh-fzf-history-search
+# antigen bundle joshskidmore/zsh-fzf-history-search
 antigen theme romkatv/powerlevel10k
 antigen apply
 antigen cache-gen
@@ -68,6 +68,16 @@ antigen cache-gen
 
 if [ -f /etc/zsh/zshrc ]; then
     source /etc/zsh/zshrc
+fi
+
+
+########################################################################################################################
+### Load fzf integration
+########################################################################################################################
+
+if type fzf > /dev/null;
+then
+    source <(fzf --zsh)
 fi
 
 

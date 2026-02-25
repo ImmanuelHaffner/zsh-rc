@@ -80,6 +80,7 @@ then
     source <(fzf --zsh)
 
     # Set up fzf completion for bazel
+    # Provides fuzzy completion for bazel test targets
     function _fzf_complete_bazel_test() {
         _fzf_complete '-m' "$@" < <(command bazel query \
             "kind('(test|test_suite) rule', //...)" 2> /dev/null)
@@ -119,6 +120,8 @@ setopt ignoreeof
 ### Per-directory zshrc configuration
 ########################################################################################################################
 
+# Hook called when the current working directory changes
+# Sources .project.zsh if it exists and is executable
 function chpwd()
 {
     emulate -L zsh

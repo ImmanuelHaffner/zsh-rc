@@ -30,8 +30,14 @@ EOF
     export PAGER=bat
 fi
 
-export CC=/usr/bin/clang
-export CXX=/usr/bin/clang++
+# Prefer clang if available, fall back to gcc
+if [ -x /usr/bin/clang ]; then
+    export CC=/usr/bin/clang
+    export CXX=/usr/bin/clang++
+elif [ -x /usr/bin/gcc ]; then
+    export CC=/usr/bin/gcc
+    export CXX=/usr/bin/g++
+fi
 export ANDROID_HOME=/opt/android-sdk
 export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
 export PYTHONIOENCODING=utf-8

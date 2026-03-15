@@ -76,5 +76,7 @@ then
         echo "WARNING: $ZSHENV_SECRETS_FILE is accessible by other users. Consider running: chmod 600 $ZSHENV_SECRETS_FILE" >&2
     fi
     unset _secrets_perms
+    set -a  # auto-export all assignments (makes KEY=value equivalent to export KEY=value)
     source "$ZSHENV_SECRETS_FILE"
+    set +a
 fi

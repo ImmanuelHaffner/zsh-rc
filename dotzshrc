@@ -78,7 +78,18 @@ fi
 
 if type fzf > /dev/null;
 then
-    source <(fzf --zsh)
+    # NOTE: zsh-vi-mode (jeffreytse/zsh-vi-mode) resets keybindings in its
+    # `zvm_after_init` hook, which runs *after* .zshrc finishes sourcing. That
+    # reset clobbers fzf's Ctrl-R binding in the `viins` (insert) keymap, so
+    # insert mode falls back to zsh's builtin history search while normal mode
+    # (`vicmd`) keeps fzf. To fix this, defer sourcing fzf until after
+    # zsh-vi-mode has finished, so fzf's `bindkey`s are applied last in both
+    # keymaps. If zsh-vi-mode is not loaded, source fzf immediately.
+    if (( ${+parameters[zvm_after_init_commands]} )); then
+        zvm_after_init_commands+=('source <(fzf --zsh)')
+    else
+        source <(fzf --zsh)
+    fi
 
     # Set up fzf completion for bazel
     # Provides fuzzy completion for bazel test targets

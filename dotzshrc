@@ -64,6 +64,25 @@ antigen cache-gen
 
 
 ########################################################################################################################
+### per-directory-history: bind Ctrl-G toggle in insert mode too
+########################################################################################################################
+
+# The per-directory-history plugin binds its toggle key (PER_DIRECTORY_HISTORY_TOGGLE,
+# default '^G') only to the main keymap and `vicmd`, never to `viins`. As a result the
+# local/global history toggle works in normal mode but not in insert mode. Bind it in
+# `viins` as well. Defer via zsh-vi-mode's after_init phase so it survives zvm_init()'s
+# keymap reset (which runs after .zshrc). Fall back to binding immediately otherwise.
+if (( ${+functions[per-directory-history-toggle-history]} )); then
+    _pdh_toggle_key="${PER_DIRECTORY_HISTORY_TOGGLE:-^G}"
+    if (( ${+parameters[zvm_after_init_commands]} )); then
+        zvm_after_init_commands+=("bindkey -M viins '${_pdh_toggle_key}' per-directory-history-toggle-history")
+    else
+        bindkey -M viins "${_pdh_toggle_key}" per-directory-history-toggle-history
+    fi
+fi
+
+
+########################################################################################################################
 ### Import global zshrc
 ########################################################################################################################
 

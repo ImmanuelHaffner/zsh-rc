@@ -204,17 +204,21 @@ then
             export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
             ;;
         Darwin)
-            # macOS: ssh-agent (dealing with weirdly inconsistent socket path)
-            possible_sockets=(/private/tmp/com.apple.launchd.*/Listeners)
-            if [[ ${#possible_sockets[@]} -gt 0 ]]; then
-                echo "Found multiple possible ssh-agent sockets; you should probably investigate this." >&2
-            fi
-            for possible_socket in "${possible_sockets[@]}"; do
-                if [[ -e "$possible_socket" ]]; then
-                    export SSH_AUTH_SOCK="$possible_socket"
-                    break
+            # macOS: launchd normally exports SSH_AUTH_SOCK automatically. Only fall
+            # back to probing the launchd socket if it isn't already set.
+            if [[ -z "$SSH_AUTH_SOCK" || ! -e "$SSH_AUTH_SOCK" ]]; then
+                # (N) => NULL_GLOB: expands to nothing (no error) when there is no match
+                possible_sockets=(/private/tmp/com.apple.launchd.*/Listeners(N))
+                if (( ${#possible_sockets[@]} > 1 )); then
+                    echo "Found multiple possible ssh-agent sockets; you should probably investigate this." >&2
                 fi
-            done
+                for possible_socket in "${possible_sockets[@]}"; do
+                    if [[ -e "$possible_socket" ]]; then
+                        export SSH_AUTH_SOCK="$possible_socket"
+                        break
+                    fi
+                done
+            fi
             ;;
     esac
 fi

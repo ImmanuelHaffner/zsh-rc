@@ -43,6 +43,10 @@ if [ -f ~/.config/antigen.zsh ];
 then
     # Custom
     source ~/.config/antigen.zsh
+elif [ -f ~/.config/antigen/antigen.zsh ];
+then
+    # Git clone
+    source ~/.config/antigen/antigen.zsh
 elif [ -f /usr/share/zsh/share/antigen.zsh ];
 then
     # On Linux
